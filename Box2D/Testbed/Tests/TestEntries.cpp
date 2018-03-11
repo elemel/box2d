@@ -48,6 +48,7 @@
 #include "Mobile.h"
 #include "MobileBalanced.h"
 #include "MotorJoint.h"
+#include "MotorJoint2.h"
 #include "OneSidedPlatform.h"
 #include "Pinball.h"
 #include "PolyCollision.h"
@@ -89,6 +90,7 @@ TestEntry g_testEntries[] =
 	{"Continuous Test", ContinuousTest::Create},
 	{"Time of Impact", TimeOfImpact::Create},
 	{"Motor Joint", MotorJoint::Create},
+	{"Motor Joint 2", MotorJoint2::Create},
 	{"One-Sided Platform", OneSidedPlatform::Create},
 	{"Mobile", Mobile::Create},
 	{"MobileBalanced", MobileBalanced::Create},
