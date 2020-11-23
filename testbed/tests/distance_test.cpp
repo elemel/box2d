@@ -30,16 +30,15 @@ public:
 	{
 		{
 			m_transformA.SetIdentity();
-			m_transformA.p.Set(0.0f, -0.2f);
-			m_polygonA.SetAsBox(10.0f, 0.2f);
+			m_transformA.p.Set(0.0f, 0.0f);
+			m_circleA.m_radius = 2.0f;
 		}
 
 		{
-			m_positionB.Set(12.017401f, 0.13678508f);
-			m_angleB = -0.0109265f;
+			m_positionB.Set(-2.0f, 0.0f);
+			m_angleB = 0.0f;
 			m_transformB.Set(m_positionB, m_angleB);
-
-			m_polygonB.SetAsBox(2.0f, 0.1f);
+			m_circleB.m_radius = 0.5f;
 		}
 	}
 
@@ -53,8 +52,8 @@ public:
 		Test::Step(settings);
 
 		b2DistanceInput input;
-		input.proxyA.Set(&m_polygonA, 0);
-		input.proxyB.Set(&m_polygonB, 0);
+		input.proxyA.Set(&m_circleA, 0);
+		input.proxyB.Set(&m_circleB, 0);
 		input.transformA = m_transformA;
 		input.transformB = m_transformB;
 		input.useRadii = true;
@@ -71,18 +70,8 @@ public:
 
 		{
 			b2Color color(0.9f, 0.9f, 0.9f);
-			b2Vec2 v[b2_maxPolygonVertices];
-			for (int32 i = 0; i < m_polygonA.m_count; ++i)
-			{
-				v[i] = b2Mul(m_transformA, m_polygonA.m_vertices[i]);
-			}
-			g_debugDraw.DrawPolygon(v, m_polygonA.m_count, color);
-
-			for (int32 i = 0; i < m_polygonB.m_count; ++i)
-			{
-				v[i] = b2Mul(m_transformB, m_polygonB.m_vertices[i]);
-			}
-			g_debugDraw.DrawPolygon(v, m_polygonB.m_count, color);
+			g_debugDraw.DrawCircle(b2Mul(m_transformA, m_circleA.m_p), m_circleA.m_radius, color);
+			g_debugDraw.DrawCircle(b2Mul(m_transformB, m_circleB.m_p), m_circleB.m_radius, color);
 		}
 
 		b2Vec2 x1 = output.pointA;
@@ -132,8 +121,8 @@ public:
 
 	b2Transform m_transformA;
 	b2Transform m_transformB;
-	b2PolygonShape m_polygonA;
-	b2PolygonShape m_polygonB;
+	b2CircleShape m_circleA;
+	b2CircleShape m_circleB;
 };
 
 static int testIndex = RegisterTest("Geometry", "Distance Test", DistanceTest::Create);
